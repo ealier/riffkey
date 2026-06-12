@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Админ-панель — YANKI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #050505;
+        --bg-elevated: #111111;
+        --border: #222222;
+        --accent: #0a5c4a;
+        --text: #ffffff;
+        --muted: #9e9e9e;
+        --danger: #ff4b4b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #111 0, #050505 55%, #000 100%);
+        color: var(--text);
+      }
+
+      .admin-shell {
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .sidebar {
+        width: 260px;
+        padding: 24px 20px;
+        background: rgba(0, 0, 0, 0.9);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .logo {
+        font-weight: 800;
+        letter-spacing: 0.3em;
+        font-size: 20px;
+      }
+
+      .sidebar-section-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--muted);
+        letter-spacing: 0.14em;
+        margin-bottom: 6px;
+      }
+
+      .nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .nav-item {
+        padding: 8px 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        color: var(--muted);
+        transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+      }
+
+      .nav-item svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .nav-item.active,
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        transform: translateY(-1px);
+      }
+
+      .main {
+        flex: 1;
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .title {
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .subtitle {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 10px 18px;
+        border: 1px solid transparent;
+        background: var(--accent);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .btn:hover {
+        background: #0f7a60;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border-color: var(--border);
+        color: var(--text);
+      }
+
+      .btn-outline:hover {
+        background: var(--bg-elevated);
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr);
+        gap: 18px;
+        align-items: flex-start;
+      }
+
+      .card {
+        background: rgba(5, 5, 5, 0.9);
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        padding: 16px 16px 14px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .card-subtitle {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .products-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      .products-table th,
+      .products-table td {
+        padding: 6px 6px;
+      }
+
+      .products-table th {
+        text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .products-table tbody tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        transition: background 0.15s ease;
+      }
+
+      .products-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+      }
+
+      .tag-sale {
+        background: rgba(255, 75, 75, 0.12);
+        color: var(--danger);
+      }
+
+      .tag-new {
+        background: rgba(10, 92, 74, 0.16);
+        color: #4ade80;
+      }
+
+      .actions {
+        display: flex;
+        gap: 6px;
+      }
+
+      .icon-btn {
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .icon-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .icon-btn.danger {
+        border-color: rgba(255, 75, 75, 0.6);
+      }
+
+      .icon-btn.danger svg {
+        stroke: var(--danger);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 12px;
+        margin-top: 4px;
+      }
+
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .form-field label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+
+      .form-field input,
+      .form-field textarea,
+      .form-field select {
+        background: var(--bg-elevated);
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        padding: 7px 9px;
+        color: var(--text);
+        font-size: 13px;
+        font-family: inherit;
+      }
+
+      .form-field textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+
+      .chips-input {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .form-footer {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #22c55e;
+        margin-right: 4px;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      @media (max-width: 960px) {
+        .admin-shell {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .content {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="sidebar">
+        <div class="logo">YANKI</div>
+        <div>
+          <div class="sidebar-section-title">Навигация</div>
+          <ul class="nav-list">
+            <li class="nav-item active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+              </svg>
+              Товары
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="header-row">
+          <div>
+            <div class="title">Товары</div>
+            <div class="subtitle">Управляйте ассортиментом магазина в реальном времени</div>
+          </div>
+          <button class="btn" id="btnNew">Добавить товар</button>
+        </div>
+
+        <div class="content">
+          <section class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Список товаров</div>
+                <div class="card-subtitle" id="productsCount">Загрузка...</div>
+              </div>
+            </div>
+            <div style="overflow:auto; max-height: 480px;">
+              <table class="products-table" id="productsTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>Цена</th>
+                    <th>Бейдж</th>
+                    <th>Наличие</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title" id="formTitle">Новый товар</div>
+                <div class="card-subtitle">Заполните поля и нажмите «Сохранить»</div>
+              </div>
+              <span class="badge-pill">
+                <span class="status-dot"></span>
+                Черновик
+              </span>
+            </div>
+            <form id="productForm">
+              <input type="hidden" name="id" id="fieldId" />
+              <div class="form-grid">
+                <div class="form-field">
+                  <label>Название</label>
+                  <input type="text" id="fieldName" required />
+                </div>
+                <div class="form-field">
+                  <label>Бренд</label>
+                  <input type="text" id="fieldBrand" value="YANKI" />
+                </div>
+                <div class="form-field">
+                  <label>Категория</label>
+                  <select id="fieldCategory">
+                    <option value="">Не выбрано</option>
+                    <option value="Платья">Платья</option>
+                    <option value="Блузки">Блузки</option>
+                    <option value="Футболки">Футболки</option>
+                    <option value="Рубашки">Рубашки</option>
+                    <option value="Худи">Худи</option>
+                    <option value="Свитшоты">Свитшоты</option>
+                    <option value="Брюки">Брюки</option>
+                    <option value="Джинсы">Джинсы</option>
+                    <option value="Юбки">Юбки</option>
+                    <option value="Костюмы">Костюмы</option>
+                    <option value="Верхняя одежда">Верхняя одежда</option>
+                    <option value="Обувь">Обувь</option>
+                    <option value="Аксессуары">Аксессуары</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>Бейдж</label>
+                  <select id="fieldBadge">
+                    <option value="">Нет</option>
+                    <option value="new">NEW</option>
+                    <option value="sale">SALE</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>Цена (₽)</label>
+                  <input type="number" id="fieldPrice" min="0" required />
+                </div>
+                <div class="form-field">
+                  <label>Старая цена (₽)</label>
+                  <input type="number" id="fieldOldPrice" min="0" />
+                </div>
+                <div class="form-field">
+                  <label>Скидка (%)</label>
+                  <input type="number" id="fieldDiscount" min="0" max="100" />
+                </div>
+                <div class="form-field">
+                  <label>Основное изображение (URL)</label>
+                  <input type="text" id="fieldImage" />
+                </div>
+                <div class="form-field">
+                  <label>Галерея (через запятую)</label>
+                  <input type="text" id="fieldImages" class="chips-input" placeholder="url1, url2, url3" />
+                </div>
+                <div class="form-field">
+                  <label>Цвета (hex через запятую)</label>
+                  <input type="text" id="fieldColors" class="chips-input" placeholder="#000000,#ffffff" />
+                </div>
+                <div class="form-field">
+                  <label>Размеры (через запятую)</label>
+                  <input type="text" id="fieldSizes" class="chips-input" placeholder="XS,S,M,L" />
+                </div>
+                <div class="form-field">
+                  <label>Рейтинг</label>
+                  <input type="number" id="fieldRating" min="0" max="5" step="0.1" />
+                </div>
+                <div class="form-field">
+                  <label>Кол-во отзывов</label>
+                  <input type="number" id="fieldReviews" min="0" />
+                </div>
+                <div class="form-field" style="grid-column: 1 / -1;">
+                  <label>Описание</label>
+                  <textarea id="fieldDescription" rows="3"></textarea>
+                </div>
+                <div class="form-field" style="grid-column: 1 / -1;">
+                  <label>
+                    <input type="checkbox" id="fieldInStock" checked />
+                    В наличии
+                  </label>
+                </div>
+              </div>
+              <div class="form-footer">
+                <button type="button" class="btn btn-outline" id="btnReset">Очистить</button>
+                <button type="submit" class="btn">Сохранить</button>
+              </div>
+              <div class="muted" id="formStatus"></div>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      async function api(url, options = {}) {
+        const res = await fetch(url, {
+          headers: { "Content-Type": "application/json" },
+          ...options,
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || "Ошибка запроса");
+        }
+        return data;
+      }
+
+      const tableBody = document.querySelector("#productsTable tbody");
+      const productsCountEl = document.getElementById("productsCount");
+      const form = document.getElementById("productForm");
+      const formTitle = document.getElementById("formTitle");
+      const formStatus = document.getElementById("formStatus");
+
+      const fieldId = document.getElementById("fieldId");
+      const fieldName = document.getElementById("fieldName");
+      const fieldBrand = document.getElementById("fieldBrand");
+      const fieldCategory = document.getElementById("fieldCategory");
+      const fieldBadge = document.getElementById("fieldBadge");
+      const fieldPrice = document.getElementById("fieldPrice");
+      const fieldOldPrice = document.getElementById("fieldOldPrice");
+      const fieldDiscount = document.getElementById("fieldDiscount");
+      const fieldImage = document.getElementById("fieldImage");
+      const fieldImages = document.getElementById("fieldImages");
+      const fieldColors = document.getElementById("fieldColors");
+      const fieldSizes = document.getElementById("fieldSizes");
+      const fieldRating = document.getElementById("fieldRating");
+      const fieldReviews = document.getElementById("fieldReviews");
+      const fieldDescription = document.getElementById("fieldDescription");
+      const fieldInStock = document.getElementById("fieldInStock");
+
+      async function loadProducts() {
+        productsCountEl.textContent = "Загрузка...";
+        tableBody.innerHTML = "";
+        try {
+          const data = await api("/api/products");
+          const products = data.products || [];
+          productsCountEl.textContent = products.length + " товаров";
+          for (const p of products) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${p.id}</td>
+              <td>${p.name}</td>
+              <td>${p.category || "-"}</td>
+              <td>${p.price.toLocaleString("ru-RU")} ₽</td>
+              <td>${p.badge ? `<span class="tag ${p.badge === "sale" ? "tag-sale" : "tag-new"}">${p.badge.toUpperCase()}</span>` : ""}</td>
+              <td>${p.inStock ? "В наличии" : "Нет"}</td>
+              <td>
+                <div class="actions">
+                  <button class="icon-btn" data-edit="${p.id}" title="Редактировать">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 20h9" />
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
+                  </button>
+                  <button class="icon-btn danger" data-delete="${p.id}" title="Удалить">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6l-1 14H6L5 6" />
+                      <path d="M10 11v6" />
+                      <path d="M14 11v6" />
+                      <path d="M9 6V4h6v2" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            `;
+            tableBody.appendChild(tr);
+          }
+        } catch (e) {
+          productsCountEl.textContent = "Ошибка загрузки";
+          console.error(e);
+        }
+      }
+
+      function parseList(value) {
+        return value
+          .split(",")
+          .map((v) => v.trim())
+          .filter(Boolean);
+      }
+
+      function fillForm(p) {
+        fieldId.value = p.id || "";
+        fieldName.value = p.name || "";
+        fieldBrand.value = p.brand || "YANKI";
+        fieldCategory.value = p.category || "";
+        fieldBadge.value = p.badge || "";
+        fieldPrice.value = p.price || "";
+        fieldOldPrice.value = p.oldPrice || "";
+        fieldDiscount.value = p.discount || "";
+        fieldImage.value = p.image || "";
+        fieldImages.value = (p.images || []).join(", ");
+        fieldColors.value = (p.colors || []).join(", ");
+        fieldSizes.value = (p.sizes || []).join(", ");
+        fieldRating.value = p.rating || "";
+        fieldReviews.value = p.reviewsCount || "";
+        fieldDescription.value = p.description || "";
+        fieldInStock.checked = !!p.inStock;
+        formTitle.textContent = p.id ? "Редактирование товара" : "Новый товар";
+      }
+
+      function resetForm() {
+        fillForm({
+          id: "",
+          name: "",
+          brand: "YANKI",
+          category: "",
+          badge: "",
+          price: "",
+          oldPrice: "",
+          discount: "",
+          image: "",
+          images: [],
+          colors: [],
+          sizes: [],
+          rating: "",
+          reviewsCount: "",
+          description: "",
+          inStock: true,
+        });
+        formStatus.textContent = "";
+      }
+
+      document.getElementById("btnNew").addEventListener("click", resetForm);
+      document.getElementById("btnReset").addEventListener("click", resetForm);
+
+      tableBody.addEventListener("click", async (e) => {
+        const editBtn = e.target.closest("[data-edit]");
+        const deleteBtn = e.target.closest("[data-delete]");
+
+        if (editBtn) {
+          const id = Number(editBtn.getAttribute("data-edit"));
+          const data = await api("/api/products");
+          const product = (data.products || []).find((p) => Number(p.id) === id);
+          if (product) {
+            fillForm(product);
+          }
+        }
+
+        if (deleteBtn) {
+          const id = Number(deleteBtn.getAttribute("data-delete"));
+          if (!confirm("Удалить товар #" + id + "?")) return;
+          try {
+            await api("/api/products/" + id, {
+              method: "DELETE",
+            });
+            await loadProducts();
+            if (Number(fieldId.value) === id) {
+              resetForm();
+            }
+          } catch (err) {
+            alert(err.message || "Ошибка удаления");
+          }
+        }
+      });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        formStatus.textContent = "";
+        const payload = {
+          id: fieldId.value ? Number(fieldId.value) : undefined,
+          name: fieldName.value.trim(),
+          brand: fieldBrand.value.trim() || "YANKI",
+          category: fieldCategory.value || null,
+          badge: fieldBadge.value || null,
+          price: Number(fieldPrice.value || 0),
+          oldPrice: fieldOldPrice.value ? Number(fieldOldPrice.value) : null,
+          discount: fieldDiscount.value ? Number(fieldDiscount.value) : null,
+          image: fieldImage.value.trim(),
+          images: parseList(fieldImages.value),
+          colors: parseList(fieldColors.value),
+          sizes: parseList(fieldSizes.value),
+          rating: fieldRating.value ? Number(fieldRating.value) : null,
+          reviewsCount: fieldReviews.value ? Number(fieldReviews.value) : null,
+          description: fieldDescription.value.trim(),
+          inStock: fieldInStock.checked,
+        };
+
+        try {
+          const isUpdate = !!payload.id;
+          await api(
+            "/api/products" + (isUpdate ? "/" + payload.id : ""),
+            {
+              method: isUpdate ? "PUT" : "POST",
+              body: JSON.stringify(payload),
+            }
+          );
+          formStatus.textContent = "Сохранено ✓";
+          await loadProducts();
+          if (!isUpdate) resetForm();
+        } catch (err) {
+          formStatus.textContent = err.message || "Ошибка сохранения";
+        }
+      });
+
+      loadProducts();
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,16 @@
+[
+  {
+    "phone": "79510337306",
+    "codeHash": "aed54cdb84f56568cd0b96b57cff440eb0d87bb4c59f904723629b23768f38a1",
+    "expiresAt": 1778009469596,
+    "resendAvailableAt": 1778008929596,
+    "createdAt": "2026-05-05T19:21:09.596Z",
+    "attemptsLeft": 5,
+    "payload": {
+      "full_name": "Rafael",
+      "login": "rafael",
+      "phone": "79510337306",
+      "password": "123456"
+    }
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "full_name": "Администратор",
+    "email": "admin@yanki.ru",
+    "password": "admin123",
+    "is_admin": true,
+    "bonus_points": 0,
+    "club_member": false,
+    "avatar": "",
+    "login": "admin",
+    "phone": "",
+    "club_card_number": ""
+  },
+  {
+    "id": 2,
+    "full_name": "Test123",
+    "email": "test123@mail.ru",
+    "password": "123456",
+    "is_admin": false,
+    "bonus_points": 150,
+    "club_member": true,
+    "avatar": "",
+    "login": "test123",
+    "phone": "",
+    "club_card_number": "5549 4035 6283 2985"
+  },
+  {
+    "id": 3,
+    "full_name": "user",
+    "login": "user",
+    "phone": "",
+    "email": "kay.li@internet.ru",
+    "password": "123456",
+    "is_admin": false,
+    "bonus_points": 0,
+    "club_member": true,
+    "club_card_number": "5595 2615 1922 1160",
+    "avatar": ""
+  },
+  {
+    "id": 4,
+    "full_name": "a4787675",
+    "login": "a4787675",
+    "phone": "",
+    "email": "a4787675@gmail.com",
+    "password": "1234567",
+    "is_admin": false,
+    "bonus_points": 0,
+    "club_member": true,
+    "club_card_number": "5531 9201 1608 4304",
+    "avatar": ""
+  },
+  {
+    "id": 5,
+    "full_name": "gkhaber",
+    "login": "gkhaber",
+    "phone": "",
+    "email": "gkhaber@mail.ru",
+    "password": "123456",
+    "is_admin": false,
+    "bonus_points": 0,
+    "club_member": true,
+    "club_card_number": "5582 4912 7110 3184",
+    "avatar": ""
+  }
+]

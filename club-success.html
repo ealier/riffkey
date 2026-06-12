@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YANKI Club — оплата</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/common.css" />
+    <style>
+      .wrap { max-width: 980px; margin: 0 auto; padding: 34px 40px; }
+      .card { background:#fff; border:1px solid #eee; border-radius: 18px; padding: 18px; box-shadow: 0 12px 30px rgba(0,0,0,0.06); }
+      .title { font-size: 34px; font-weight: 900; margin-bottom: 10px; }
+      .sub { color: var(--gray-medium); line-height: 1.7; margin-bottom: 16px; }
+      .btns { display:flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+      .btn { display:inline-flex; align-items:center; justify-content:center; padding: 12px 16px; border-radius: 999px; border: 1px solid #e5e5e5; text-decoration:none; font-weight: 900; color: var(--primary-black); background:#fff; cursor:pointer; }
+      .btn.primary { background: var(--primary-black); color:#fff; border-color: var(--primary-black); }
+      .btn:hover { background: var(--primary-black); color:#fff; border-color: var(--primary-black); }
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-left"><div class="menu-btn" id="menuBtn" role="button" aria-label="Открыть меню"><span></span><span></span><span></span></div></div>
+      <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">YANKI</a></div>
+      <div class="header-right">
+        <div class="header-icon" onclick="window.location.href='cart.html'" role="button" aria-label="Корзина" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <div class="header-icon" id="userIcon" role="button" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg></div>
+      </div>
+    </header>
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+      <div class="side-menu-header"><div class="side-menu-logo">YANKI</div><button class="side-menu-close" id="sideMenuClose" aria-label="Закрыть">✕</button></div>
+      <nav><ul><li><a href="index.html" onclick="closeSideMenu()">Главная</a></li></ul></nav>
+    </div>
+
+    <main>
+      <div class="wrap">
+        <div class="title" id="statusTitle">Проверяем оплату…</div>
+        <div class="sub" id="statusSub">Подождите несколько секунд.</div>
+        <div class="card">
+          <div id="clubInfo"></div>
+          <div class="btns">
+            <a class="btn primary" href="club.html">К карте клуба</a>
+            <a class="btn" href="profile.html">Профиль</a>
+            <a class="btn" href="index.html">На главную</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/store.js"></script>
+    <script src="js/support-chat.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const titleEl = document.getElementById('statusTitle');
+        const subEl = document.getElementById('statusSub');
+        const info = document.getElementById('clubInfo');
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('orderId');
+        if (!orderId) {
+          if (titleEl) titleEl.textContent = 'Нет данных';
+          if (subEl) subEl.textContent = 'Откройте ссылку после оплаты.';
+          return;
+        }
+
+        async function apiJson(url) {
+          const res = await fetch(url);
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data?.message || 'Ошибка');
+          return data;
+        }
+
+        async function poll() {
+          try {
+            const data = await apiJson('/api/payments/status?orderId=' + encodeURIComponent(orderId));
+            const order = data.order;
+            const payment = data.payment;
+            if (info) info.innerHTML = '<p><b>Заказ:</b> ' + order.id + '</p><p><b>Статус оплаты:</b> ' + (payment?.status || '') + '</p>';
+
+            if (payment?.status === 'succeeded') {
+              if (titleEl) titleEl.textContent = 'Добро пожаловать в YANKI Club!';
+              if (subEl) subEl.textContent = 'Карта активирована. Баллы будут начисляться после покупок.';
+              if (data.user) {
+                try {
+                  const prev = JSON.parse(localStorage.getItem('yanki_user') || 'null');
+                  if (
+                    prev &&
+                    (prev.login === data.user.login ||
+                      prev.email === data.user.email ||
+                      prev.phone === data.user.phone)
+                  ) {
+                    localStorage.setItem('yanki_user', JSON.stringify({ ...prev, ...data.user }));
+                  }
+                } catch (e) {}
+              }
+              return;
+            }
+            if (payment?.status === 'canceled') {
+              if (titleEl) titleEl.textContent = 'Оплата отменена';
+              if (subEl) subEl.textContent = 'Попробуйте снова на странице клуба.';
+              return;
+            }
+            setTimeout(poll, 1500);
+          } catch (err) {
+            if (titleEl) titleEl.textContent = 'Ошибка';
+            if (subEl) subEl.textContent = err?.message || '';
+          }
+        }
+        poll();
+      });
+    </script>
+  </body>
+</html>

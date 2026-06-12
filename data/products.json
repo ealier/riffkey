@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Футболка",
+    "brand": "YANKI",
+    "price": 1500,
+    "oldPrice": 2000,
+    "discount": 15,
+    "image": "https://a.lmcdn.ru/product/R/T/RTLAEK347101_28160146_1_v1.jpg",
+    "images": [
+      "https://a.lmcdn.ru/product/R/T/RTLAEK347101_28160146_1_v1.jpg",
+      "https://a.lmcdn.ru/product/R/T/RTLAEK347101_28160148_3_v1.jpg",
+      "https://a.lmcdn.ru/product/R/T/RTLAEK347101_28160149_4_v1.jpg"
+    ],
+    "badge": "new",
+    "category": "Футболки",
+    "colors": [],
+    "sizes": [
+      "XS",
+      "S",
+      "L",
+      "XL",
+      "XLL"
+    ],
+    "description": "Машинная стирка с краткой центрифугой при 40 °с, отбеливать запрещено, запрещено сушить в сушилке, гладить при 110 °с, химчистка запрещена.",
+    "rating": 5,
+    "reviewsCount": 1,
+    "inStock": true
+  }
+]

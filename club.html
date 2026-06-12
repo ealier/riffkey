@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RiifKey Club — карта лояльности</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/account.css" />
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-left">
+        <div class="menu-btn" id="menuBtn" role="button" aria-label="Открыть меню"><span></span><span></span><span></span></div>
+      </div>
+      <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit">RiifKey</a></div>
+      <div class="header-right">
+        <div class="header-icon" onclick="window.location.href='favorites.html'" role="button" aria-label="Избранное" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+        </div>
+        <div class="header-icon" onclick="window.location.href='cart.html'" role="button" aria-label="Корзина" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <div class="header-icon" id="userIcon" title="Вход / регистрация" role="button" aria-label="Вход / регистрация" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+        </div>
+      </div>
+    </header>
+
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+      <div class="side-menu-header"><div class="side-menu-logo">RiifKey</div><button class="side-menu-close" id="sideMenuClose" aria-label="Закрыть меню">✕</button></div>
+      <nav><ul>
+        <li><a href="index.html" onclick="closeSideMenu()">Главная <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="catalog.html" onclick="closeSideMenu()">Каталог <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="catalog.html?filter=new" onclick="closeSideMenu()">Новинки <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="catalog.html?filter=sale" onclick="closeSideMenu()">Распродажа <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="favorites.html" onclick="closeSideMenu()">Избранное <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="cart.html" onclick="closeSideMenu()">Корзина <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+      </ul></nav>
+      <div class="side-menu-footer">
+        <a href="about.html" onclick="closeSideMenu()">О компании</a>
+        <a href="delivery.html" onclick="closeSideMenu()">Доставка и оплата</a>
+        <a href="contacts.html" onclick="closeSideMenu()">Контакты</a>
+      </div>
+    </div>
+
+    <main>
+      <div class="page-wrap">
+        <div class="page-hero-title">RiifKey Club</div>
+        <p class="page-hero-sub">
+          Карта лояльности: за каждые 1500 ₽ в оплаченном заказе начисляется 150 бонусов. Бонусами можно оплатить до 50% следующей покупки.
+          Оформление карты — символический платёж <b>1 ₽</b> через YooKassa.
+        </p>
+
+        <div class="club-card-visual">
+          <div class="club-card-visual-inner">
+            <div>
+              <div class="club-card-chip">RiifKey Club</div>
+              <div class="club-card-logo">RiifKey</div>
+            </div>
+            <div>
+              <div class="club-card-number" id="clubCardNumber">0000 0000 0000</div>
+              <div class="club-card-name" id="clubCardName">Имя участника</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="clubMemberBadge" style="display: none; margin-top: 18px;" class="profile-card">
+          <h3>Статус</h3>
+          <p style="color: #111; font-weight: 800;">Вы участник клуба. Баллы начисляются после каждой успешной оплаты заказа.</p>
+          <a href="profile.html" class="btn-account" style="margin-top: 12px; text-decoration: none; display: inline-flex;">Открыть профиль</a>
+        </div>
+
+        <div id="clubJoinSection">
+          <div class="club-actions">
+            <span class="club-price-tag">Оформление: 1 ₽</span>
+          </div>
+          <div class="profile-card" style="margin-top: 18px;">
+            <h3>Активировать карту</h3>
+            <p class="hint" style="margin-bottom: 12px;">Введите пароль от аккаунта — после оплаты 1 ₽ карта станет активной.</p>
+            <div class="field-row">
+              <label for="clubPwd">Пароль</label>
+              <input type="password" id="clubPwd" autocomplete="current-password" placeholder="Текущий пароль" />
+            </div>
+            <button type="button" class="btn-account" id="clubPayBtn">Оформить карту за 1 ₽</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">RiifKey</div>
+          <p class="footer-description">Современный магазин женской одежды.</p>
+          <div class="footer-social"></div>
+        </div>
+        <div class="footer-column"><h4>Покупателям</h4><ul><li><a href="delivery.html">Доставка</a></li><li><a href="payment.html">Оплата</a></li></ul></div>
+        <div class="footer-column"><h4>Компания</h4><ul><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+          <div class="footer-column"><h4>Контакты</h4><ul><li><a href="tel:+78001234567">8 800 123-45-67</a></li><li><a href="mailto:info@riifkey.ru">info@riifkey.ru</a></li><li><a href="contacts.html">Оренбург, ул. Гаранькина 25</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p class="footer-copyright">© 2026 RiifKey</p><div class="footer-payments"><div class="footer-payment">VISA</div><div class="footer-payment">MC</div><div class="footer-payment">MIR</div><div class="footer-payment">SBP</div></div></div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/store.js"></script>
+    <script src="js/support-chat.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/club-page.js"></script>
+  </body>
+</html>

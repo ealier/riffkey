@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет — YANKI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/account.css" />
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-left">
+        <div class="menu-btn" id="menuBtn" role="button" aria-label="Открыть меню"><span></span><span></span><span></span></div>
+      </div>
+      <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit">YANKI</a></div>
+      <div class="header-right">
+        <div class="header-icon" onclick="window.location.href='favorites.html'" role="button" aria-label="Избранное" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+        </div>
+        <div class="header-icon" onclick="window.location.href='cart.html'" role="button" aria-label="Корзина" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <div class="header-icon" id="userIcon" title="Аккаунт" role="button" aria-label="Аккаунт" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+        </div>
+      </div>
+    </header>
+
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+      <div class="side-menu-header"><div class="side-menu-logo">YANKI</div><button class="side-menu-close" id="sideMenuClose" aria-label="Закрыть меню">✕</button></div>
+      <nav><ul>
+        <li><a href="index.html" onclick="closeSideMenu()">Главная <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="catalog.html" onclick="closeSideMenu()">Каталог <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="favorites.html" onclick="closeSideMenu()">Избранное <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+        <li><a href="cart.html" onclick="closeSideMenu()">Корзина <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg></a></li>
+      </ul></nav>
+      <div class="side-menu-footer">
+        <a href="about.html" onclick="closeSideMenu()">О компании</a>
+        <a href="delivery.html" onclick="closeSideMenu()">Доставка и оплата</a>
+        <a href="contacts.html" onclick="closeSideMenu()">Контакты</a>
+      </div>
+    </div>
+
+    <main>
+      <div class="page-wrap">
+        <div class="page-hero-title">Личный кабинет</div>
+        <p class="page-hero-sub">Имя, email и безопасность аккаунта. Баллы RiiFKey Club доступны в личном кабинете.</p>
+
+        <div class="profile-grid">
+          <div>
+            <div class="profile-card">
+              <div class="profile-hero">
+                <div>
+                  <div class="profile-stat">Бонусы: <b id="pfBonus">0</b></div>
+                  <p class="hint" id="pfClubStatus" style="margin-top: 8px;"></p>
+                </div>
+              </div>
+              <form id="profileForm">
+                <div class="field-row">
+                  <label for="pfName">Имя</label>
+                  <input type="text" id="pfName" autocomplete="name" required />
+                </div>
+                <div class="field-row">
+                  <label>Email</label>
+                  <div id="pfEmailDisplay" style="padding: 11px 12px; border: 1px solid #eee; border-radius: 12px; background: #fafafa;"></div>
+                </div>
+                <div class="field-row">
+                  <label for="pfNewPwd">Новый пароль</label>
+                  <input type="password" id="pfNewPwd" autocomplete="new-password" placeholder="Минимум 6 символов" />
+                </div>
+                <div class="field-row">
+                  <button type="button" class="btn-account btn-account-outline" id="pfSendPwdCodeBtn">Отправить код на почту</button>
+                  <p class="hint" style="margin-top:8px">Смена пароля подтверждается кодом из письма.</p>
+                </div>
+                <div class="field-row">
+                  <label for="pfPwdCode">Код из письма</label>
+                  <input type="text" id="pfPwdCode" inputmode="numeric" maxlength="6" placeholder="6 цифр" />
+                </div>
+                <button type="submit" class="btn-account">Сохранить изменения</button>
+              </form>
+            </div>
+          </div>
+
+          <div>
+            <div class="profile-card" style="margin-top: 18px">
+              <h3>Клуб</h3>
+              <p class="hint"><a href="club.html">RiiFKey Club</a> — карта за 1 ₽, бонусы с покупок.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">YANKI</div>
+          <p class="footer-description">Современный магазин женской одежды.</p>
+        </div>
+        <div class="footer-column"><h4>Компания</h4><ul><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p class="footer-copyright">© 2025 YANKI</p></div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="js/store.js"></script>
+    <script src="js/support-chat.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+  </body>
+</html>

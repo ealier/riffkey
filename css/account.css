@@ -1,0 +1,268 @@
+/* Страницы профиля и YANKI Club */
+.page-wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 34px 40px 48px;
+}
+
+.page-hero-title {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.page-hero-sub {
+  color: var(--gray-medium);
+  line-height: 1.7;
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+
+.club-card-visual {
+  position: relative;
+  border-radius: 22px;
+  padding: 28px 24px;
+  min-height: 200px;
+  background: linear-gradient(135deg, #111 0%, #1e1e1e 45%, #000 100%);
+  color: #fff;
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.club-card-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.club-card-visual-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+
+.club-card-logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.club-card-chip {
+  align-self: flex-start;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+.club-card-number {
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  font-family: ui-monospace, monospace;
+  transition: opacity 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.club-card-number.is-revealing {
+  opacity: 0.75;
+  letter-spacing: 0.2em;
+}
+
+.club-card-name {
+  font-size: 15px;
+  opacity: 0.92;
+}
+
+.club-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.club-price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #f5f5f5;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+.profile-card h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  color: var(--gray-dark);
+}
+
+.profile-hero {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.profile-avatar-lg {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #111, #2a2a2a);
+  color: #fff;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.profile-avatar-lg img,
+#pfAvatarPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-stat {
+  font-size: 14px;
+  color: var(--gray-medium);
+}
+
+.profile-stat b {
+  color: var(--primary-black);
+  font-size: 22px;
+}
+
+.field-row {
+  margin-bottom: 14px;
+}
+
+.field-row label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  color: var(--gray-dark);
+}
+
+.field-row input {
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.field-row input:focus {
+  outline: none;
+  border-color: var(--primary-black);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.order-item {
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #fafafa;
+}
+
+.order-item-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.order-item-id {
+  font-weight: 800;
+}
+
+.order-item-sum {
+  font-weight: 700;
+  color: var(--primary-black);
+}
+
+.order-item-meta {
+  font-size: 12px;
+  color: var(--gray-medium);
+}
+
+.order-goods {
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.btn-account {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--primary-black);
+  color: #fff;
+  transition: opacity 0.2s;
+}
+
+.btn-account:hover {
+  opacity: 0.92;
+}
+
+.btn-account-outline {
+  background: #fff;
+  color: var(--primary-black);
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-wrap {
+    padding: 26px 18px 40px;
+  }
+}
