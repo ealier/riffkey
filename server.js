@@ -104,6 +104,9 @@ function buildEmailTransport() {
     port,
     secure: port === 465,
     auth: { user, pass },
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 10_000,
   };
   if (port === 587) {
     opts.requireTLS = true;
@@ -125,7 +128,12 @@ async function sendEmailCode({ toEmail, code }) {
   }
 
   try {
-    await transport.sendMail({ from, to: toEmail, subject, text });
+    await Promise.race([
+      transport.sendMail({ from, to: toEmail, subject, text }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('SMTP timeout — почтовый сервер не ответил вовремя')), 12_000)
+      ),
+    ]);
   } catch (err) {
     const raw = [
       err?.message,
@@ -420,6 +428,22 @@ app.post('/api/auth/register/request-code', async (req, res) => {
       return res
         .status(400)
         .json({ success: false, message: 'Логин совпадает с существующим email' });
+    }
+
+    if (String(process.env.REGISTER_SKIP_EMAIL_VERIFY || '').trim() === 'true') {
+      const user = await db.createUser({
+        full_name: fullName,
+        login,
+        email,
+        password,
+        phone: '',
+      });
+      return res.json({
+        success: true,
+        skipVerify: true,
+        message: 'Аккаунт создан',
+        user: toSafeUser(user),
+      });
     }
 
     const now = Date.now();

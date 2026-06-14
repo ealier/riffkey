@@ -668,6 +668,12 @@ async function submitRegister(e) {
   e.preventDefault();
   setAuthError('');
   const form = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const prevLabel = submitBtn ? submitBtn.textContent : '';
+  if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправляем…';
+  }
   try {
       const payload = {
           email: form.email.value.trim(),
@@ -675,6 +681,16 @@ async function submitRegister(e) {
       };
 
       const data = await apiJson('/api/auth/register/request-code', { method: 'POST', body: JSON.stringify(payload) });
+
+      if (data.user) {
+          setStoredUser(data.user);
+          showToast(data.message || 'Аккаунт создан', 'success');
+          updateUserIcon(true);
+          await renderAccountView(data.user);
+          runPostAuthRedirectIfAny();
+          return false;
+      }
+
       applyRegisterCodeMeta(data);
       let toastMsg = data?.message || 'Код отправлен на email';
       if (data && data.delivered === false) {
@@ -685,6 +701,11 @@ async function submitRegister(e) {
       renderEmailCodeConfirmView({ email: payload.email });
   } catch (err) {
       setAuthError(err.message || 'Ошибка регистрации');
+  } finally {
+      if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = prevLabel || 'Создать аккаунт';
+      }
   }
   return false;
 }
