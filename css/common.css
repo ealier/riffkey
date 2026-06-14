@@ -2380,6 +2380,7 @@ footer {
 .auth-modal-sheet .modal-title {
     font-weight: 800;
     letter-spacing: 0.03em;
+    color: var(--gray-medium);
 }
 
 .auth-modal-sheet .modal-subtitle {
