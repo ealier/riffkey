@@ -189,17 +189,14 @@ function normalizeGlobalFooter() {
         <ul>
           <li><a href="tel:+79510337306">79510337306</a></li>
           <li><a href="mailto:arshanovraf@bk.ru">arshanovraf@bk.ru</a></li>
-          <li><a href="contacts.html">Оренбург, ул. Гаранькина 25</a></li>
+          <li><a href="contacts.html">Оренбург, ул. Советская, 27</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-copyright">© 2026 RiiFKey. Все права защищены.</p>
       <div class="footer-payments">
-        <div class="footer-payment">VISA</div>
-        <div class="footer-payment">MC</div>
-        <div class="footer-payment">MIR</div>
-        <div class="footer-payment">SBP</div>
+        <div class="footer-payment">ЮMoney</div>
       </div>
     </div>
   `;
@@ -591,8 +588,8 @@ function renderAuthView(view) {
     ${renderAuthTabs('login')}
     <form class="modal-form" onsubmit="return submitLogin(event)">
       <div class="modal-field">
-        <label>Email</label>
-        <input name="email" type="email" placeholder="you@mail.ru" required />
+        <label>Email или логин</label>
+        <input name="email" type="text" placeholder="admin или you@mail.ru" required />
       </div>
       <div class="modal-field">
         <label>Пароль</label>
@@ -602,7 +599,7 @@ function renderAuthView(view) {
         <button class="modal-btn primary" type="submit">Войти</button>
         <button class="modal-btn ghost" type="button" onclick="closeAuthModal()">Отмена</button>
       </div>
-      <div class="modal-note">Админ доступ: <b>admin</b> / <b>admin123</b></div>
+      <div class="modal-note">Админ: <b>admin</b> / <b>admin123</b> или <b>admin@yanki.ru</b> / <b>admin123</b></div>
     </form>
   `;
 }
@@ -849,8 +846,9 @@ function applyBrandingAndLocationOverrides() {
       ['Yanki', 'RiifKey'],
       ['yanki', 'riifkey'],
       ['2025', '2026'],
-      ['Москва, ул. Примерная, 1', 'Оренбург, ул. Гаранькина 25'],
-      ['Оренбург, ул. Советская, 27 (центр)', 'Оренбург, ул. Гаранькина 25'],
+      ['Москва, ул. Примерная, 1', 'Оренбург, ул. Советская, 27'],
+      ['Оренбург, ул. Гаранькина 25', 'Оренбург, ул. Советская, 27'],
+      ['Оренбург, ул. Советская, 27 (центр)', 'Оренбург, ул. Советская, 27'],
       ['info@yanki.ru', 'arshanovraf@bk.ru'],
       ['info@riifkey.ru', 'arshanovraf@bk.ru'],
       ['support@yanki.ru', 'arshanovraf@bk.ru'],
@@ -908,8 +906,8 @@ function ensureHelpModal() {
 
   sheet.innerHTML = `
     <div class="modal-head help-modal-head">
-      <div class="modal-title">ИИ Помощник</div>
-      <div class="modal-subtitle">Я помогу вам найти нужный раздел и навигировать по сайту</div>
+      <div class="modal-title">Помощник по сайту</div>
+      <div class="modal-subtitle">Подскажу, где найти нужный раздел</div>
       <button class="modal-close" type="button" aria-label="Close" onclick="closeHelpModal()">✕</button>
     </div>
     <div class="modal-body help-modal-body">
@@ -921,7 +919,7 @@ function ensureHelpModal() {
         </svg>
       </div>
       <div class="ai-message">
-        <p class="ai-greeting">Привет! Я ваш ИИ помощник.</p>
+        <p class="ai-greeting">Здравствуйте! Это помощник RiiFKey.</p>
         <p class="ai-instruction">Куда вы хотите перейти?</p>
       </div>
       <div class="help-nav-buttons">
@@ -1077,7 +1075,7 @@ function ensureContactsModal() {
           </div>
           <div class="contact-card-content">
             <h4>Адрес магазина</h4>
-            <p class="contact-text">Москва, ул. Примерная, 1</p>
+            <p class="contact-text">Оренбург, ул. Советская, 27</p>
             <p class="contact-hint">Ежедневно с 10:00 до 22:00</p>
           </div>
         </div>
